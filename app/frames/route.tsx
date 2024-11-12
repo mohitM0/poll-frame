@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { frames } from "./frames";
-import { Button } from "frames.js/next";
+// import { Button } from "frames.js/next";
 
 export const GET = frames(async () => {
 
