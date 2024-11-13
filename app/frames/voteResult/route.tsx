@@ -3,8 +3,8 @@ import { frames } from "../frames";
 import { Button } from "frames.js/next";
 
 const handleRequest = frames(async (ctx) => {
-  const { selectedOption, voteIndex } = ctx.searchParams;
-  const pollId = 'your-poll-id'; // Replace with your actual poll ID or pass it dynamically if needed.
+  const { selectedOption } = ctx.searchParams;
+  // const pollId = 'your-poll-id'; // Replace with your actual poll ID or pass it dynamically if needed.
 
   // if (voteIndex !== undefined) {
   //   // Trigger the vote API call
