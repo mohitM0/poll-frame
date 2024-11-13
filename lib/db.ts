@@ -1,15 +1,22 @@
 // lib/db.ts
+require("dotenv").config();
 import mongoose from "mongoose";
 
-const NEXT_PUBLIC_MONGODB_CON_STRING = process.env.NEXT_PUBLIC_MONGODB_CON_STRING || "";
+const MONGODB_CON_STRING = process.env.MONGODB_CON_STRING || "";
 
-if (!NEXT_PUBLIC_MONGODB_CON_STRING) {
-  throw new Error("Please define the NEXT_PUBLIC_MONGODB_CON_STRING environment variable inside .env.local");
+if (!MONGODB_CON_STRING) {
+  throw new Error("Please define the MONGODB_CON_STRING environment variable inside .env.local");
 }
 
 export async function connectToDatabase() {
   if (mongoose.connection.readyState >= 1) return mongoose.connection.asPromise();
-  return mongoose.connect(NEXT_PUBLIC_MONGODB_CON_STRING);
+  try {
+    return await mongoose.connect(MONGODB_CON_STRING);
+  } catch (error) {
+    console.error("Database connection error:", error);
+    throw error;
+  }
 }
+
 
 

@@ -35,7 +35,6 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-```
 poll-frame
 ├─ app
 │  ├─ favicon.ico
@@ -45,15 +44,14 @@ poll-frame
 │  ├─ frames
 │  │  ├─ frames.ts
 │  │  ├─ route.tsx
-│  │  ├─ vote
+│  │  ├─ voteResult
 │  │  │  └─ route.tsx
 │  │  └─ xmtpHandler.js
 │  ├─ globals.css
 │  ├─ layout.tsx
 │  └─ page.tsx
 ├─ lib
-│  ├─ db.ts
-│  └─ pollHandler.js
+│  └─ db.ts
 ├─ models
 │  └─ Poll.ts
 ├─ next.config.ts
