@@ -17,7 +17,7 @@ const handleRequest = frames(async () => {
                 key={index}
                 action="post"
                 target={{
-                    pathname: "/frames/voteResult",
+                    pathname: "/voteResult",
                     query: { selectedOption: option, voteIndex: index },
                 }}
 

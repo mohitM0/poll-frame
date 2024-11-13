@@ -3,7 +3,7 @@ import { frames } from "../frames";
 import { Button } from "frames.js/next";
 
 const handleRequest = frames(async (ctx) => {
-  const { selectedOption } = ctx.searchParams;
+  const selectedOption = ctx.searchParams.selectedOption;
   // const pollId = 'your-poll-id'; // Replace with your actual poll ID or pass it dynamically if needed.
 
   // if (voteIndex !== undefined) {
@@ -28,12 +28,13 @@ const handleRequest = frames(async (ctx) => {
       </div>
     ),
     buttons: [
-      <Button action="post" target="/frames/poll">
+      <Button action="post" target="/">
         Back to Poll
       </Button>,
     ],
   };
 });
+
 
 export const GET = handleRequest;
 export const POST = handleRequest;
