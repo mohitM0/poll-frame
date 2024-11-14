@@ -17,7 +17,6 @@ export const frames = createFrames({
           if (!isXmtpFrameActionPayload(body)) {
             return undefined;
           }
- 
           return getXmtpFrameMessage(body);
         },
       },
