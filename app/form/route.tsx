@@ -4,12 +4,6 @@
 
 // pass state from frame message
 export default function CreatePollForm({
-  searchParams,
-}: {
-  // provided by URL returned from composer action server
-  searchParams: {
-    uid: string;
-  };
 }) {
   // const composerActionState = JSON.parse(
   //   searchParams.state

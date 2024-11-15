@@ -1,8 +1,8 @@
 import { composerAction, composerActionForm, error } from "frames.js/core";
-import { NextRequest } from "next/server";
+// import { NextRequest } from "next/server";
 import { frames } from "../../frames";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
     return composerAction({
         action: {
             type: "post",

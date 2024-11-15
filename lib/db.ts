@@ -1,4 +1,4 @@
-// lib/db.ts
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require("dotenv").config();
 import mongoose from "mongoose";
 
