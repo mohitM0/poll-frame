@@ -48,17 +48,8 @@ export const POST = frames(async (ctx) => {
     // This is the state of the chat. This is to be paased in the serialized string format. First define a type for this state, then send the values  according to that type from the invoice app(when the user click on a composer action). 
     // To be implemented later after all the basic implementations.
 
-    // composerActionForm({
-    //     title: "Create a Poll",
-    //     url: createPollFormUrl.toString(),
-    // })
-    return {
-        image: (
-            <div tw="bg-purple-800 text-white w-full h-full flex flex-col justify-center items-center p-4">
-                <h2 tw="text-4xl font-bold mb-8 text-center">{createPollFormUrl.toString()}</h2>
-            </div>
-        ),
-        
-        
-    };
+    return composerActionForm({
+        title: "Create a Poll",
+        url: createPollFormUrl.toString(),
+    })
 });
