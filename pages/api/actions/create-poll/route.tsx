@@ -1,6 +1,6 @@
 import { composerAction, composerActionForm, error } from "frames.js/core";
 // import { NextRequest } from "next/server";
-import { frames } from "../../frames";
+import { frames } from "../../../../app/frames/frames";
 
 export const GET = async () => {
     return composerAction({

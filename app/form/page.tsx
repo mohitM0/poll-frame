@@ -18,7 +18,7 @@ export default function CreatePollForm({
 
         // normally you would send the request to server, do something there, etc
         // this is only for demonstration purposes
-
+        console.log("i am here on newFrame url")
         const newFrameUrl = new URL(
           "/frames",
           window.location.href
