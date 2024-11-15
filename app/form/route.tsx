@@ -1,6 +1,6 @@
 "use client";
 
-import type { ComposerActionState } from "frames.js/types";
+// import type { ComposerActionState } from "frames.js/types";
 
 // pass state from frame message
 export default function CreatePollForm({

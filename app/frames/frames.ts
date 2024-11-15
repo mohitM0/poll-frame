@@ -1,4 +1,4 @@
-import { openframes } from "frames.js/middleware";
+import { openframes, warpcastComposerActionState } from "frames.js/middleware";
 import { createFrames } from "frames.js/next";
 import { getXmtpFrameMessage, isXmtpFrameActionPayload } from "frames.js/xmtp";
  
@@ -21,6 +21,6 @@ export const frames = createFrames({
         },
       },
     }),
-    // warpcastComposerActionState()
+    warpcastComposerActionState()
   ],
 });
