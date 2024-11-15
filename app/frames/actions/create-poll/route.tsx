@@ -1,4 +1,4 @@
-import { composerAction, composerActionForm } from "frames.js/core";
+import { composerAction, composerActionForm, error } from "frames.js/core";
 import { NextRequest } from "next/server";
 import { frames } from "../../frames";
 
@@ -15,42 +15,50 @@ export const GET = async (req: NextRequest) => {
                 ? `https://${process.env.VERCEL_URL}`
                 : "http://localhost:3000"
         )}`,
-        description: "Create polls and directly share in chat with friends.",
+        description: "Create polls.",
         imageUrl: "https://framesjs.org/logo.png",
     })
 }
 
 export const POST = frames(async (ctx) => {
-    // const walletAddress = await ctx.walletAddress();
+    const walletAddress = await ctx.walletAddress();
 
     const createPollFormUrl = new URL(
-        "/frames/actions/form",
+        "/form",
         process.env.VERCEL_URL
             ? `https://${process.env.VERCEL_URL}`
             : "http://localhost:3000"
     );
 
-    // if (walletAddress) {
-    //     createPollFormUrl.searchParams.set("uid", walletAddress);
-    // } else {
-    //     return error("Must be authenticated");
-    // }
+    if (walletAddress) {
+        createPollFormUrl.searchParams.set("uid", walletAddress);
+    } else {
+        return error("Must be authenticated");
+    }
 
-    // if (!ctx.composerActionState) {
+    console.log(createPollFormUrl)
+    // if (!ctx.message?.state) {
     //     return error("Must be called from composer");
     // }
     
-    // createGameUrl.searchParams.set(
+    // createPollFormUrl.searchParams.set(
     //     "state",
     //     JSON.stringify(ctx.composerActionState)
     // );
     // This is the state of the chat. This is to be paased in the serialized string format. First define a type for this state, then send the values  according to that type from the invoice app(when the user click on a composer action). 
     // To be implemented later after all the basic implementations.
 
-    
-
-    return composerActionForm({
-        title: "Create a Poll",
-        url: createPollFormUrl.toString(),
-    });
+    // composerActionForm({
+    //     title: "Create a Poll",
+    //     url: createPollFormUrl.toString(),
+    // })
+    return {
+        image: (
+            <div tw="bg-purple-800 text-white w-full h-full flex flex-col justify-center items-center p-4">
+                <h2 tw="text-4xl font-bold mb-8 text-center">{createPollFormUrl.toString()}</h2>
+            </div>
+        ),
+        
+        
+    };
 });

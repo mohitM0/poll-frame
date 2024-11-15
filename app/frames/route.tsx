@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key */
+// import { button } from "frames.js/core";
 import { frames } from "./frames";
 import { Button } from "frames.js/next";
 
 const handleRequest = frames(async () => {
     const question = "What's your favorite feature?";
-    const options = ["Ease of use", "Security", "Customizability", "Integration"];
+    // const options = ["Ease of use", "Security", "Customizability", "Integration"];
 
     return {
         image: (
@@ -12,19 +13,25 @@ const handleRequest = frames(async () => {
                 <h2 tw="text-4xl font-bold mb-8 text-center">{question}</h2>
             </div>
         ),
-        buttons: options.map((option, index) => (
-            <Button
-                key={index}
-                action="post"
-                target={{
-                    pathname: "/voteResult",
-                    query: { selectedOption: option, voteIndex: index },
-                }}
+        buttons: [<Button action="post" target={{pathname: "/actions/create-poll",
+            
+        }}>
+            check
+        </Button>]
+        // options.map((option, index) => (
+        //     <Button
+        //         key={index}
+        //         action="post"
+        //         target={{
+        //             pathname: "/voteResult",
+        //             query: { selectedOption: option, voteIndex: index },
+        //         }}
 
-            >
-                {option}
-            </Button>
-        )),
+        //     >
+        //         {option}
+        //     </Button>
+        // )),
+        
     };
 });
 
