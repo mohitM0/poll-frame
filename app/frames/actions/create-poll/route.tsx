@@ -1,6 +1,6 @@
 import { composerAction, composerActionForm, error } from "frames.js/core";
 // import { NextRequest } from "next/server";
-import { frames } from "../../../../app/frames/frames";
+import { frames } from "../../frames";
 
 export const GET = async () => {
     return composerAction({
@@ -9,19 +9,16 @@ export const GET = async () => {
         },
         icon: "poll",
         name: "Create a Poll",
-        aboutUrl: `${new URL(
-            "/frames/actions/create-poll",
-            process.env.VERCEL_URL
-                ? `https://${process.env.VERCEL_URL}`
-                : "http://localhost:3000"
-        )}`,
+        aboutUrl: `${process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : "http://localhost:3000"}`,
         description: "Create polls.",
         imageUrl: "https://framesjs.org/logo.png",
     })
 }
 
 export const POST = frames(async (ctx) => {
-    const walletAddress = await ctx.walletAddress();
+    // const walletAddress = await ctx.walletAddress();
 
     const createPollFormUrl = new URL(
         "/form",
@@ -30,17 +27,17 @@ export const POST = frames(async (ctx) => {
             : "http://localhost:3000"
     );
 
-    if (walletAddress) {
-        createPollFormUrl.searchParams.set("uid", walletAddress);
-    } else {
-        return error("Must be authenticated");
-    }
+    // if (walletAddress) {
+    //     createPollFormUrl.searchParams.set("uid", walletAddress);
+    // } else {
+    //     return error("Must be authenticated");
+    // }
 
-    console.log(createPollFormUrl)
+    // console.log(createPollFormUrl)
     // if (!ctx.message?.state) {
     //     return error("Must be called from composer");
     // }
-    
+
     // createPollFormUrl.searchParams.set(
     //     "state",
     //     JSON.stringify(ctx.composerActionState)

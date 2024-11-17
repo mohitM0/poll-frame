@@ -1,4 +1,4 @@
-import { farcasterHubContext, openframes, warpcastComposerActionState } from "frames.js/middleware";
+import { openframes } from "frames.js/middleware";
 import { createFrames } from "frames.js/next";
 import { getXmtpFrameMessage, isXmtpFrameActionPayload } from "frames.js/xmtp";
  
@@ -21,7 +21,7 @@ export const frames = createFrames({
         },
       },
     }),
-    farcasterHubContext(),
-    warpcastComposerActionState()
+    // farcasterHubContext(),
+    // warpcastComposerActionState()
   ],
 });
