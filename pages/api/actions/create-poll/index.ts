@@ -3,6 +3,14 @@ import { composerAction, composerActionForm } from "frames.js/core";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    
+    // Set the cookie
+    res.setHeader('Set-Cookie', ' Secure; SameSite=None');
+
+    // Add CORS headers if necessary
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+
     const createPollFormUrl = new URL(
         "/form",
         process.env.VERCEL_URL
