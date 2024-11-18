@@ -20,9 +20,9 @@ export default function CreatePollForm() {
         });
 
         // Create new URL for the poll frame
-        const newFrameUrl = new URL("/frames", process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
-          : "http://localhost:3000");
+        // const newFrameUrl = new URL("/frames", process.env.VERCEL_URL
+        //   ? `https://${process.env.VERCEL_URL}`
+        //   : "http://localhost:3000");
 
         // Example message for creating a new poll cast (modify as needed)
         window.parent.postMessage(
