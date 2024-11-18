@@ -18,9 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 },
                 icon: "poll",
                 name: "Create a Poll",
-                aboutUrl: process.env.VERCEL_URL
-                    ? `https://${process.env.VERCEL_URL}`
-                    : "http://localhost:3000",
+                aboutUrl: "mohit.com",
+                // aboutUrl: process.env.VERCEL_URL
+                //     ? `https://${process.env.VERCEL_URL}`
+                //     : "http://localhost:3000",
                 description: "Create polls.",
                 imageUrl: "https://framesjs.org/logo.png",
             });
