@@ -26,7 +26,7 @@ const nextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: "*", // Remove the header or explicitly set it to allow
+            value: "ALLOW-FROM http://localhost:3000", // Remove the header or explicitly set it to allow
           },
         ],
       },
