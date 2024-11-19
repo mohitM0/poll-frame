@@ -57,9 +57,14 @@ export default function CreatePollForm() {
       setPollResponse(data); // Store the poll response
       setErrorMessage(null); // Clear any existing error messages
       console.log("Poll created successfully:", data);
-    } catch (error: any) {
-      console.error("Error creating poll:", error);
-      setErrorMessage(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error creating poll:", error);
+        setErrorMessage(error.message);
+      } else {
+        console.error("Unknown error:", error);
+        setErrorMessage("An unexpected error occurred.");
+      }
     }
   };
 
