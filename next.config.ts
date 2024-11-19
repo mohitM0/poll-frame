@@ -26,7 +26,7 @@ const nextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: "", // Remove the header or explicitly set it to allow
+            value: "*", // Remove the header or explicitly set it to allow
           },
         ],
       },
