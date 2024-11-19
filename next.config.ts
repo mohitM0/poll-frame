@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // prevent double render on dev mode, which causes 2 frames to exist
+  // Prevent double render on dev mode, which causes 2 frames to exist
   reactStrictMode: false,
   images: {
-    minimumCacheTTL: 1, // to allow dynamic images in case you are previewing them using next/image
+    minimumCacheTTL: 1, // To allow dynamic images in case you are previewing them using next/image
     remotePatterns: [
       {
         hostname: "*",
@@ -23,6 +23,10 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value: "frame-ancestors 'self' *", // Allow iframe embedding
+          },
+          {
+            key: "X-Frame-Options",
+            value: "", // Remove the header or explicitly set it to allow
           },
         ],
       },
