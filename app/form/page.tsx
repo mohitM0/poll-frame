@@ -2,8 +2,9 @@
 import { useState } from "react";
 
 export default function CreatePollForm() {
-
   const [options, setOptions] = useState(["", ""]);
+  const [pollResponse, setPollResponse] = useState(null); // State to store the poll response
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error handling
 
   const addOption = () => {
     if (options.length < 4) {
@@ -23,25 +24,43 @@ export default function CreatePollForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const question = formData.get("poll-question")?.toString();
+    const filteredOptions = options.filter((option) => option.trim());
 
-    console.log("Poll data:", {
-      question: formData.get("poll-question"),
-      options: options.filter((option) => option.trim()),
-    });
+    // Validate the input
+    if (!question || filteredOptions.length < 2) {
+      setErrorMessage("A question and at least two options are required.");
+      return;
+    }
 
-    window.parent.postMessage(
-      {
-        type: "createPoll",
-        data: {
-          question: formData.get("poll-question")!.toString(),
-          options: options.filter((option) => option.trim()),
+    try {
+      // Send POST request to the API
+      const response = await fetch("/api/polls", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      },
-      "*"
-    );
+        body: JSON.stringify({
+          question,
+          options: filteredOptions,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create the poll.");
+      }
+
+      const data = await response.json();
+      setPollResponse(data); // Store the poll response
+      setErrorMessage(null); // Clear any existing error messages
+      console.log("Poll created successfully:", data);
+    } catch (error: any) {
+      console.error("Error creating poll:", error);
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -103,10 +122,33 @@ export default function CreatePollForm() {
         </button>
       )}
 
+      {/* Error Message */}
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
       {/* Submit Button */}
       <button className="rounded bg-blue-600 text-white p-3 hover:bg-blue-700 shadow-lg">
         Create Poll
       </button>
+
+      {/* Poll Response */}
+      {pollResponse && (
+        <div className="mt-4 p-4 border text-black border-green-500 rounded bg-green-100">
+          <h3 className="text-lg font-bold">Poll Created Successfully!</h3>
+          <pre className="text-sm">{JSON.stringify(pollResponse, null, 2)}</pre>
+        </div>
+      )}
     </form>
   );
 }
+
+
+// window.parent.postMessage(
+//   {
+//     type: "createPoll",
+//     data: {
+//       question: formData.get("poll-question")!.toString(),
+//       options: options.filter((option) => option.trim()),
+//     },
+//   },
+//   "*"
+// );
