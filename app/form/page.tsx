@@ -1,101 +1,110 @@
 "use client";
 
+import { useState } from "react";
+
 export default function CreatePollForm() {
+  const [options, setOptions] = useState(["", ""]);
+
+  const addOption = () => {
+    if (options.length < 4) {
+      setOptions([...options, ""]);
+    }
+  };
+
+  const updateOption = (index: number, value: string) => {
+    const updatedOptions = [...options];
+    updatedOptions[index] = value;
+    setOptions(updatedOptions);
+  };
+
+  const removeOption = (index: number) => {
+    if (options.length > 2) {
+      setOptions(options.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    console.log("Poll data:", {
+      question: formData.get("poll-question"),
+      options: options.filter((option) => option.trim()),
+    });
+
+    window.parent.postMessage(
+      {
+        type: "createPoll",
+        data: {
+          question: formData.get("poll-question")!.toString(),
+          options: options.filter((option) => option.trim()),
+        },
+      },
+      "*"
+    );
+  };
+
   return (
     <form
-      className="flex flex-col gap-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-
-        // Log form data for demonstration purposes
-        console.log("Poll data:", {
-          question: formData.get("poll-question"),
-          options: [
-            formData.get("option-1"),
-            formData.get("option-2"),
-            formData.get("option-3"),
-            formData.get("option-4"),
-          ].filter(Boolean), // Filter out any empty options
-        });
-
-        // Create new URL for the poll frame
-        // const newFrameUrl = new URL("/frames", process.env.VERCEL_URL
-        //   ? `https://${process.env.VERCEL_URL}`
-        //   : "http://localhost:3000");
-
-        // Example message for creating a new poll cast (modify as needed)
-        window.parent.postMessage(
-          {
-            type: "createPoll",
-            data: {
-              question: formData.get("poll-question")!.toString(),
-              options: [
-                formData.get("option-1")!.toString(),
-                formData.get("option-2")!.toString(),
-                formData.get("option-3")!.toString(),
-                formData.get("option-4")!.toString(),
-              ].filter(Boolean),
-            },
-          },
-          "*"
-        );
-      }}
+      className="flex flex-col gap-6 p-4 bg-gray-50 rounded shadow-md"
+      onSubmit={handleSubmit}
     >
-      <label htmlFor="poll-question" className="font-semibold">
-        Poll Question
-      </label>
-      <input
-        className="resize-none w-full p-2 rounded border border-slate-800"
-        name="poll-question"
-        id="poll-question"
-        placeholder="Enter your question here"
-        required
-      />
+      {/* Poll Question Section */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl font-bold text-slate-800">Poll Question</h2>
+        <label htmlFor="poll-question" className="font-medium text-gray-700">
+          Question
+        </label>
+        <input
+          className="resize-none w-full p-3 rounded border border-gray-300 bg-gradient-to-r from-white to-gray-100 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
+          name="poll-question"
+          id="poll-question"
+          placeholder="Enter your question here"
+          required
+        />
+      </div>
 
-      <label htmlFor="option-1" className="font-semibold">
-        Option 1
-      </label>
-      <input
-        className="resize-none w-full p-2 rounded border border-slate-800"
-        name="option-1"
-        id="option-1"
-        placeholder="Enter option 1"
-        required
-      />
+      {/* Options Section */}
+      {options.map((option, index) => (
+        <div key={index} className="flex flex-col gap-2">
+          <h3 className="text-lg font-semibold text-slate-700">
+            Option {index + 1}
+          </h3>
+          <div className="flex items-center gap-2">
+            <input
+              className="resize-none w-full p-3 rounded border border-gray-300 bg-gradient-to-r from-white to-gray-100 shadow focus:outline-none focus:ring-2 focus:ring-green-400 text-black"
+              placeholder={`Enter option ${index + 1}`}
+              value={option}
+              onChange={(e) => updateOption(index, e.target.value)}
+              required={index < 2} // First two options are required
+            />
+            {options.length > 2 && (
+              <button
+                type="button"
+                onClick={() => removeOption(index)}
+                className="text-red-500 font-bold hover:text-red-700"
+                title="Remove this option"
+              >
+                &times;
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
 
-      <label htmlFor="option-2" className="font-semibold">
-        Option 2
-      </label>
-      <input
-        className="resize-none w-full p-2 rounded border border-slate-800"
-        name="option-2"
-        id="option-2"
-        placeholder="Enter option 2"
-        required
-      />
+      {/* Add Option Button */}
+      {options.length < 4 && (
+        <button
+          type="button"
+          onClick={addOption}
+          className="self-start text-green-600 font-medium hover:text-green-800"
+        >
+          + Add Option
+        </button>
+      )}
 
-      <label htmlFor="option-3" className="font-semibold">
-        Option 3 (optional)
-      </label>
-      <input
-        className="resize-none w-full p-2 rounded border border-slate-800"
-        name="option-3"
-        id="option-3"
-        placeholder="Enter option 3"
-      />
-
-      <label htmlFor="option-4" className="font-semibold">
-        Option 4 (optional)
-      </label>
-      <input
-        className="resize-none w-full p-2 rounded border border-slate-800"
-        name="option-4"
-        id="option-4"
-        placeholder="Enter option 4"
-      />
-
-      <button className="rounded bg-slate-800 text-white p-2" type="submit">
+      {/* Submit Button */}
+      <button className="rounded bg-blue-600 text-white p-3 hover:bg-blue-700 shadow-lg">
         Create Poll
       </button>
     </form>
