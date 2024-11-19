@@ -1,14 +1,7 @@
 "use client";
-
-import { NextApiRequest, NextApiResponse } from "next";
 import { useState } from "react";
 
-export default function CreatePollForm(req: NextApiRequest, res: NextApiResponse) {
-
-  // Set common CORS headers
-  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+export default function CreatePollForm() {
 
   const [options, setOptions] = useState(["", ""]);
 
