@@ -15,7 +15,6 @@ interface PollOption {
 
 const handleRequest = frames(async (ctx) => {
   const { pollId } = ctx.searchParams;
-  console.log(pollId)
   if (!pollId) {
     return {
       image: (
