@@ -52,7 +52,6 @@ export default function CreatePollForm() {
 
       
       if (!response.ok) {
-        console.log(response)
         throw new Error("Failed to create the poll.");
       }
 
