@@ -38,7 +38,7 @@ export default function CreatePollForm() {
 
     console.log(" i am here at form page above poll creation")
     try {
-      console.log("Submitting poll with data:", {
+      console.log("Submitting poll with data :", {
         question,
         options: filteredOptions,
       });
