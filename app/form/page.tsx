@@ -36,6 +36,7 @@ export default function CreatePollForm() {
       return;
     }
 
+    console.log(" i am here at form page above poll creation")
     try {
       // Send POST request to the API
       const response = await fetch("/api/polls", {
@@ -49,7 +50,9 @@ export default function CreatePollForm() {
         }),
       });
 
+      
       if (!response.ok) {
+        console.log(response)
         throw new Error("Failed to create the poll.");
       }
 
