@@ -12,6 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json(polls);
   } else if (req.method === 'POST') {
     // Create a new poll
+    console.log("POST /api/polls", req.body);
     const { question, options } = req.body;
     if (!question || !options || !Array.isArray(options)) {
       return res.status(400).json({ error: 'Invalid input' });
