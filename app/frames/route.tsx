@@ -13,9 +13,9 @@ interface PollOption {
     options: PollOption[];
   }
 
-const handleRequest = frames(async (req) => {
-  const { pollId } = req.query;
-
+const handleRequest = frames(async (ctx) => {
+  const { pollId } = ctx.searchParams;
+  console.log(pollId)
   if (!pollId) {
     return {
       image: (
@@ -26,10 +26,14 @@ const handleRequest = frames(async (req) => {
     };
   }
 
+  // Construct the absolute URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const pollUrl = `${baseUrl}/api/polls/${pollId}`;
+
   // Fetch poll details
   let pollData: PollData;
   try {
-    const response = await fetch(`/api/polls/${pollId}`);
+    const response = await fetch(pollUrl);
     if (!response.ok) {
       throw new Error("Failed to fetch poll details");
     }
@@ -69,4 +73,4 @@ const handleRequest = frames(async (req) => {
 });
 
 export const GET = handleRequest;
-export const POST = handleRequest;
+// export const POST = handleRequest;

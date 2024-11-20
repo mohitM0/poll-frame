@@ -59,8 +59,18 @@ export default function CreatePollForm() {
       }
 
       const data = await response.json();
-      setPollResponse(data); // Store the poll response
-      setErrorMessage(null); // Clear any existing error messages
+      const pollId = data.id; // Assuming the API returns a poll ID
+
+      // Generate the poll frame URL
+      const pollUrl = `https://poll-frame-mauve.vercel.app/frames?pollId=${pollId}`;
+
+      // Example: Send pollUrl to chat
+      window.parent.postMessage(
+        { type: "newFrame", data: { pollUrl } },
+        "*"
+      );
+      setPollResponse({ ...data, pollUrl }); // Store the response including the URL
+      setErrorMessage(null);
       console.log("Poll created successfully:", data);
     } catch (error: unknown) {
       if (error instanceof Error) {
