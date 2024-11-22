@@ -25,7 +25,7 @@ const handleRequest = frames(async (ctx) => {
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
   const pollUrl = `${baseUrl}/api/polls/${pollId}`;
 
   let pollData: PollData;

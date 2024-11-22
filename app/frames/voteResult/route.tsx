@@ -6,7 +6,7 @@ const handleRequest = frames(async (ctx) => {
   const { selectedOption, voteIndex } = ctx.searchParams;
 
   const frameUrl = ctx.message?.frameUrl;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
 
 
   if (!frameUrl) {

@@ -57,8 +57,10 @@ export default function CreatePollForm() {
 
       const data = await response.json();
       const pollId = data.id; 
+      const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
 
-      const pollUrl = `https://poll-frame-mauve.vercel.app/frames?pollId=${pollId}`;
+
+      const pollUrl = `${baseUrl}/frames?pollId=${pollId}`;
 
       window.parent.postMessage(
         { type: "newFrame", data: { pollUrl } },
