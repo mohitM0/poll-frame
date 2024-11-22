@@ -4,8 +4,11 @@ import { Button } from "frames.js/next";
 
 const handleRequest = frames(async (ctx) => {
   const { selectedOption, voteIndex } = ctx.searchParams;
-  console.log(selectedOption + " " + voteIndex);
+
   const frameUrl = ctx.message?.frameUrl;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+
   if (!frameUrl) {
     throw new Error("frameUrl is undefined");
   }
@@ -23,8 +26,7 @@ const handleRequest = frames(async (ctx) => {
   }
   if (voteIndex !== undefined) {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-      const absoluteUrl = new URL(`/api/polls/673f768608cb510f13ba789e`, baseUrl).toString();
+      const absoluteUrl = new URL(`/api/polls/${pollId}`, baseUrl).toString();
 
       await fetch(absoluteUrl, {
         method: 'POST',
@@ -45,7 +47,7 @@ const handleRequest = frames(async (ctx) => {
       </div>
     ),
     buttons: [
-      <Button action="post" target="/">
+      <Button action="post" target="/frames">
         Back to Poll
       </Button>,
     ],
