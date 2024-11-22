@@ -56,10 +56,8 @@ export default function CreatePollForm() {
       }
 
       const data = await response.json();
-      const pollId = data.id; 
+      const pollId = data._id;
       const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL;
-
-
       const pollUrl = `${baseUrl}/frames?pollId=${pollId}`;
 
       window.parent.postMessage(
