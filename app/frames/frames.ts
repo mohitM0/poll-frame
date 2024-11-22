@@ -21,7 +21,6 @@ export const frames = createFrames({
         },
       },
     }),
-    // farcasterHubContext(),
-    // warpcastComposerActionState()
+
   ],
 });

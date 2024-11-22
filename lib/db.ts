@@ -8,7 +8,6 @@ if (!MONGODB_CON_STRING) {
   throw new Error("Please define the MONGODB_CON_STRING environment variable inside .env.local");
 }
 
-// Track the connection status
 let cachedConnection: mongoose.Connection | null = null;
 
 export async function connectToDatabase() {
@@ -20,10 +19,10 @@ export async function connectToDatabase() {
   try {
     console.log("Creating a new database connection.");
     const connection = await mongoose.connect(MONGODB_CON_STRING, {
-      maxPoolSize: 10, // Enables connection pooling
-      serverSelectionTimeoutMS: 5000, // Timeout for initial server selection
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
     } as ConnectOptions);
-    cachedConnection = connection.connection; // Cache the connection
+    cachedConnection = connection.connection;
     return cachedConnection;
   } catch (error) {
     console.error("Database connection error:", error);

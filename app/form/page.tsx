@@ -3,8 +3,8 @@ import { useState } from "react";
 
 export default function CreatePollForm() {
   const [options, setOptions] = useState(["", ""]);
-  const [pollResponse, setPollResponse] = useState(null); // State to store the poll response
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error handling
+  const [pollResponse, setPollResponse] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const addOption = () => {
     if (options.length < 4) {
@@ -30,13 +30,10 @@ export default function CreatePollForm() {
     const question = formData.get("poll-question")?.toString();
     const filteredOptions = options.filter((option) => option.trim());
 
-    // Validate the input
     if (!question || filteredOptions.length < 2) {
       setErrorMessage("A question and at least two options are required.");
       return;
     }
-
-    console.log(" i am here at form page above poll creation")
     try {
       console.log("Submitting poll with data :", {
         question,
@@ -59,17 +56,15 @@ export default function CreatePollForm() {
       }
 
       const data = await response.json();
-      const pollId = data.id; // Assuming the API returns a poll ID
+      const pollId = data.id; 
 
-      // Generate the poll frame URL
       const pollUrl = `https://poll-frame-mauve.vercel.app/frames?pollId=${pollId}`;
 
-      // Example: Send pollUrl to chat
       window.parent.postMessage(
         { type: "newFrame", data: { pollUrl } },
         "*"
       );
-      setPollResponse({ ...data, pollUrl }); // Store the response including the URL
+      setPollResponse({ ...data, pollUrl });
       setErrorMessage(null);
       console.log("Poll created successfully:", data);
     } catch (error: unknown) {
@@ -88,7 +83,6 @@ export default function CreatePollForm() {
       className="flex flex-col gap-6 p-4 bg-gray-50 rounded shadow-md"
       onSubmit={handleSubmit}
     >
-      {/* Poll Question Section */}
       <div className="flex flex-col gap-2">
         <h2 className="text-xl font-bold text-slate-800">Poll Question</h2>
         <label htmlFor="poll-question" className="font-medium text-gray-700">
@@ -103,7 +97,6 @@ export default function CreatePollForm() {
         />
       </div>
 
-      {/* Options Section */}
       {options.map((option, index) => (
         <div key={index} className="flex flex-col gap-2">
           <h3 className="text-lg font-semibold text-slate-700">
@@ -115,7 +108,7 @@ export default function CreatePollForm() {
               placeholder={`Enter option ${index + 1}`}
               value={option}
               onChange={(e) => updateOption(index, e.target.value)}
-              required={index < 2} // First two options are required
+              required={index < 2}
             />
             {options.length > 2 && (
               <button
@@ -131,7 +124,6 @@ export default function CreatePollForm() {
         </div>
       ))}
 
-      {/* Add Option Button */}
       {options.length < 4 && (
         <button
           type="button"
@@ -142,15 +134,12 @@ export default function CreatePollForm() {
         </button>
       )}
 
-      {/* Error Message */}
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-      {/* Submit Button */}
       <button className="rounded bg-blue-600 text-white p-3 hover:bg-blue-700 shadow-lg">
         Create Poll
       </button>
 
-      {/* Poll Response */}
       {pollResponse && (
         <div className="mt-4 p-4 border text-black border-green-500 rounded bg-green-100">
           <h3 className="text-lg font-bold">Poll Created Successfully!</h3>
@@ -160,15 +149,3 @@ export default function CreatePollForm() {
     </form>
   );
 }
-
-
-// window.parent.postMessage(
-//   {
-//     type: "createPoll",
-//     data: {
-//       question: formData.get("poll-question")!.toString(),
-//       options: options.filter((option) => option.trim()),
-//     },
-//   },
-//   "*"
-// );

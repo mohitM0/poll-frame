@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { frames } from "../frames";
-import { Button } from "frames.js/next";
+// import { Button } from "frames.js/next";
 
 const handleRequest = frames(async (ctx) => {
   const { selectedOption, voteIndex } = ctx.searchParams;
@@ -46,11 +46,11 @@ const handleRequest = frames(async (ctx) => {
         </h2>
       </div>
     ),
-    buttons: [
-      <Button action="post" target="/frames">
-        Back to Poll
-      </Button>,
-    ],
+    // buttons: [
+    //   <Button action="post" target={new URL(`/${pollId}`, baseUrl)}>
+    //     Back to Poll
+    //   </Button>,
+    // ],
   };
 });
 

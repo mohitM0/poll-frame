@@ -1,4 +1,3 @@
-// models/Poll.ts
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 interface PollDocument extends Document {

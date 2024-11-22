@@ -11,14 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             : "http://localhost:3000"
     );
 
-    // Set common CORS headers
     res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    // Handle preflight requests
     if (req.method === "OPTIONS") {
-        res.status(204).end(); // No content for preflight
+        res.status(204).end(); 
         return;
     }
 
@@ -37,7 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 imageUrl: "https://framesjs.org/logo.png",
             });
 
-            // Consume the Response and send back JSON
             const action = await response.json();
             res.status(200).json(action);
         } catch (error) {

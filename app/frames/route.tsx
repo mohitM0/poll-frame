@@ -25,11 +25,9 @@ const handleRequest = frames(async (ctx) => {
     };
   }
 
-  // Construct the absolute URL
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const pollUrl = `${baseUrl}/api/polls/${pollId}`;
 
-  // Fetch poll details
   let pollData: PollData;
   try {
     const response = await fetch(pollUrl);
@@ -72,4 +70,4 @@ const handleRequest = frames(async (ctx) => {
 });
 
 export const GET = handleRequest;
-// export const POST = handleRequest;
+export const POST = handleRequest;
