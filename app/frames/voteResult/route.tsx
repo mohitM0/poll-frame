@@ -3,21 +3,38 @@ import { frames } from "../frames";
 import { Button } from "frames.js/next";
 
 const handleRequest = frames(async (ctx) => {
-  const selectedOption = ctx.searchParams.selectedOption;
-  // const pollId = 'your-poll-id'; // Replace with your actual poll ID or pass it dynamically if needed.
+  const { selectedOption, voteIndex } = ctx.searchParams;
+  console.log(selectedOption + " " + voteIndex);
+  const frameUrl = ctx.message?.frameUrl;
+  if (!frameUrl) {
+    throw new Error("frameUrl is undefined");
+  }
+  const urlParams = new URLSearchParams(new URL(frameUrl).search);
+  const pollId = urlParams.get("pollId");
 
-  // if (voteIndex !== undefined) {
-  //   // Trigger the vote API call
-  //   try {
-  //     await fetch(`/api/polls/${pollId}`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ voteIndex: parseInt(voteIndex) }),
-  //     });
-  //   } catch (error) {
-  //     console.error("Failed to register vote:", error);
-  //   }
-  // }
+  if (!pollId) {
+    return {
+      image: (
+        <div tw="bg-red-600 text-white w-full h-full flex justify-center items-center">
+          <h2 tw="text-2xl font-bold">Poll ID is missing</h2>
+        </div>
+      ),
+    };
+  }
+  if (voteIndex !== undefined) {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const absoluteUrl = new URL(`/api/polls/673f768608cb510f13ba789e`, baseUrl).toString();
+
+      await fetch(absoluteUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ voteIndex: parseInt(voteIndex) }),
+      });
+    } catch (error) {
+      console.error("Failed to register vote:", error);
+    }
+  }
 
   return {
     image: (
